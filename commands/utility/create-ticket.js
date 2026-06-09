@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
+const { categoryId } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder().setName('create-ticket').setDescription('Creates a ticket!'),
@@ -6,6 +7,7 @@ module.exports = {
         const channel = await interaction.guild.channels.create({
             name: `ticket-${interaction.user.username}`,
             type: ChannelType.GuildText,
+            parent: categoryId,
             permissionOverwrites: [
                 {
                     id: interaction.guild.id,
