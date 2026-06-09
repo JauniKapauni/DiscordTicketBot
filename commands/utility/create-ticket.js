@@ -21,6 +21,9 @@ module.exports = {
                 }
             ]
         });
+        await channel.send({
+            content: `${interaction.user}, welcome to ur ticket!`
+        })
         await interaction.reply({
             content: `Ticket created: ${channel}`,
             ephemeral: true
