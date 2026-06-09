@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const db = require('../../database');
 
 module.exports = {
     data: new SlashCommandBuilder().setName('close-ticket').setDescription('Closes a ticket!'),
@@ -9,6 +10,7 @@ module.exports = {
                 ephemeral: true
             });
         }
+        db.run('DELETE FROM tickets WHERE channelId = ?', [interaction.channel.id]);
         await interaction.channel.delete();
     }
 }
