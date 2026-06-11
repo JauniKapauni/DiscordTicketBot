@@ -28,6 +28,14 @@ client.once(Events.ClientReady, (readyClient) => {
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
+    if(interaction.isButton()){
+        if(interaction.customId == 'create-panel'){
+            await interaction.client.commands.get('create-ticket').execute(interaction);
+        }
+        if(interaction.customId == 'close-ticket'){
+            await interaction.client.commands.get('close-ticket').execute(interaction);
+        }
+    }
     if(!interaction.isChatInputCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
     if(!command){

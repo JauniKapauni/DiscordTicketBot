@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, ChannelType, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { categoryId } = require('../../config.json');
 const db = require('../../database');
 
@@ -39,8 +39,11 @@ module.exports = {
                 ]
             });
             db.run('INSERT INTO tickets (userId, channelId) VALUES (?, ?)', [interaction.user.id, channel.id]);
+            const closeButton = new ButtonBuilder().setCustomId('close-ticket').setLabel('Close Ticket').setStyle(ButtonStyle.Danger);
+            const actionRow = new ActionRowBuilder().addComponents(closeButton);
             await channel.send({
-                content: `${interaction.user}, welcome to ur ticket!`
+                content: `${interaction.user}, welcome to ur ticket!`,
+                components: [actionRow]
             })
             await interaction.reply({
                 content: `Ticket created: ${channel}`,
